@@ -11,10 +11,11 @@ We needed a simple app written in React and using Material UI, but we also neede
 - Unit Test Utility - [RTL](https://testing-library.com/) - closer to how users are using the app
 - E2E Tests - [Playwright](https://playwright.dev/) 
 - Development Flow - [Storybook](https://storybook.js.org/) - easy component dev in isolation
-- BE 2 FE/API - [MSW](https://mswjs.io/) 
+- BE 2 FE/API - [MSW](https://mswjs.io/), [ky](https://www.npmjs.com/package/ky) as http client 
 - A11y - [AXE](https://github.com/dequelabs/axe-core) but with [axe-playwright](https://github.com/abhinaba-ghosh/axe-playwright) 
 - Linting - Eslint, Prettier, Stylelint
 - ...
+- VITE [env variables](https://vitejs.dev/guide/env-and-mode)
 
 When creating a new app there are a few challenges that need to be tackled
 - Tooling
@@ -28,6 +29,7 @@ It would have taken me a lot of time and it's not worth it. Most of the tools ar
 ### Scaffold app
 
 This app used [degit](https://github.com/Rich-Harris/degit) and a SPA [Vite template](https://github.com/bartstc/vite-ts-react-template) using the command `npx degit bartstc/vite-ts-react-template <folder>`
+You can find more templates on the [vite awesome repo](https://github.com/vitejs/awesome-vite#templates)
 
 
 ## Basic commands
@@ -42,13 +44,22 @@ This app used [degit](https://github.com/Rich-Harris/degit) and a SPA [Vite temp
 | `pnpm build-storybook` | Builds static app with [a Storybook's content](https://storybook.js.org/docs/react/sharing/publish-storybook)                                              |
 
 
+## Dev Challenges
+
+- First time using this template
+- Need to spend some time understanding the project structure
+- Haven't worked too much with React Query & zustand
+- Need to clean up chakra UI and use Material
+
 
 ## TODO
 
+- [ ] Create basic diagram for the app
 - [ ] Use Material UI instead chakra-ui
+  - [x] Install material
+  - [ ] Clean up Chakra
 - [ ] Decide on a way to store data (zustand vs signals)
 - [ ] Implement a [changelog](https://changelog.md/)
-- [ ] Create basic diagram for the app
 - [ ] Write the components
 - [ ] Write basic Unit tests
 - [ ] Write basic E2E tests

@@ -22,6 +22,7 @@
     "@emotion/styled": "^11.13.0",
     "@fontsource/inter": "^4.5.15",
     "@mui/material": "^5.16.7",
+    "@mui/x-data-grid": "^7.12.1",
     "@tanstack/react-query": "^4.36.1",
     "framer-motion": "^9.1.7",
     "intl-messageformat": "^10.5.14",
