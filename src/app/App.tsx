@@ -1,26 +1,38 @@
 // eslint-disable-next-line no-restricted-imports
 import { RouterProvider } from "react-router-dom";
 
-import { Center, Spinner } from "@chakra-ui/react";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/inter/900.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import { router } from "pages/router";
 
-import { useAuthStore } from "modules/auth/application";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import { useEffect, useState } from "react";
 
 function App() {
-  const state = useAuthStore((store) => store.state);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
-  if (state === "finished") {
+    if (loading) {
+        return (
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ minHeight: "100vh" }}
+            >
+                <CircularProgress />
+            </Grid>
+        );
+    }
+
     return <RouterProvider router={router} />;
-  }
-
-  return (
-    <Center h="95vh">
-      <Spinner color="orange.400" size="xl" />
-    </Center>
-  );
 }
 
 export { App };

@@ -1,2 +1,2 @@
-export type { IQueryParams } from "./IQueryParams";
+export type { QueryParams } from "./QueryParams";
 export type { IMeta } from "./IMeta";

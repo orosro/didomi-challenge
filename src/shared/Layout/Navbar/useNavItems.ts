@@ -1,56 +1,24 @@
-import { useAuthStore } from "modules/auth/application";
+import { NavItem } from "./NavItem";
 
-import { INavItem } from "./INavItem";
+import { paths } from "shared/Router";
+import { t } from "utils";
 
 export const useNavItems = () => {
-  const isAuthenticated = useAuthStore((store) => store.isAuthenticated);
-
-  return isAuthenticated ? NAV_ITEMS : NAV_ITEMS.slice(0, NAV_ITEMS.length - 1);
+    const isAuthenticated = true; // Would be implemented smth like: const isAuthenticated = useAuthStore((store) => store.isAuthenticated);
+    return isAuthenticated
+        ? PUBLIC_NAV_ITEMS.concat(PRIVATE_NAV_ITEMS)
+        : PUBLIC_NAV_ITEMS;
 };
 
-// todo: translations
-export const NAV_ITEMS: Array<INavItem> = [
-  {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Choc UI",
-        subLabel: "Set of prebuilt components",
-        href: "https://choc-ui.com/",
-      },
-      {
-        label: "Explore Chakra UI Templates",
-        subLabel: "Set of opensource prebuilt components",
-        href: "https://chakra-templates.dev/",
-      },
-      {
-        label: "Tailwind UI",
-        subLabel: "Prebuilt e-commerce components",
-        href: "https://tailwindui.com/components#product-ecommerce",
-      },
-    ],
-  },
-  {
-    label: "Demo Providers",
-    children: [
-      {
-        label: "Vite.js",
-        subLabel: "Next generation Frontend Tooling",
-        href: "https://vitejs.dev/",
-      },
-      {
-        label: "Fake Store API",
-        subLabel: "Free rest API for e-commerce",
-        href: "https://fakestoreapi.com/",
-      },
-    ],
-  },
-  {
-    label: "Our Products",
-    href: "/products",
-  },
-  {
-    label: "Cart",
-    href: "/cart/1",
-  },
+export const PUBLIC_NAV_ITEMS: Array<NavItem> = [
+    {
+        label: t("Collected consents"),
+        href: paths.collectedConsentsRoutePath,
+    },
+    {
+        label: t("Give consent"),
+        href: paths.giveConsentRoutePath,
+    },
 ];
+
+export const PRIVATE_NAV_ITEMS: Array<NavItem> = [];

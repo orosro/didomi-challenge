@@ -1,46 +1,29 @@
 // eslint-disable-next-line no-restricted-imports
-import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 
 import { Layout } from "shared/Layout";
 
-import { cartPageLoader } from "./Cart/loader";
-import { homePageLoader } from "./Home/loader";
-import { productPageLoader } from "./Product/loader";
-import { productsPageLoader } from "./Products/loader";
+import { collectedConsentsLoader } from "./CollectedConsents/loader";
+
+import { paths } from "shared/Router";
 
 export const router = createBrowserRouter([
-  {
-    element: (
-      <>
-        <ScrollRestoration getKey={(location) => location.pathname} />
-        <Layout />
-      </>
-    ),
-    children: [
-      {
-        path: "/",
-        loader: homePageLoader,
-        lazy: () => import("./Home"),
-      },
-      {
-        path: "/sign-in",
-        lazy: () => import("./SignIn"),
-      },
-      {
-        path: "/products",
-        loader: productsPageLoader,
-        lazy: () => import("./Products"),
-      },
-      {
-        path: "/products/:productId",
-        loader: productPageLoader,
-        lazy: () => import("./Product"),
-      },
-      {
-        path: "/cart/:cartId",
-        loader: cartPageLoader,
-        lazy: () => import("./Cart"),
-      },
-    ],
-  },
+    {
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                loader: async () => redirect(paths.collectedConsentsRoutePath),
+            },
+            {
+                path: paths.collectedConsentsRoutePath,
+                loader: collectedConsentsLoader,
+                lazy: () => import("./CollectedConsents"),
+            },
+            {
+                path: paths.giveConsentRoutePath,
+                lazy: () => import("./GiveConsent"),
+            },
+        ],
+    },
 ]);

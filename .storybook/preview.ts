@@ -1,37 +1,27 @@
 import { createElement } from "react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ThemeProvider } from "@mui/material/styles";
 import { initialize, mswLoader } from "msw-storybook-addon";
 
 import { theme } from "../src/theme";
-import { getUserHandler, withAuth, withReactQuery } from "../src/utils";
+import { withReactQuery } from "../src/utils";
 
 export const parameters = {
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
+    controls: {
+        matchers: {
+            color: /(background|color)$/i,
+            date: /Date$/,
+        },
     },
-  },
-  a11y: { disable: true },
+    a11y: { disable: true },
 };
 
-initialize(
-  {
-    onUnhandledRequest: (req, print) => {
-      if (!req.url.host.includes("api")) {
-        return;
-      }
-
-      print.warning();
-    },
-  },
-  [getUserHandler()]
-);
+initialize({
+    onUnhandledRequest: "bypass",
+});
 
 export const decorators = [
-  (story) => createElement(ChakraProvider, { children: story(), theme }),
-  withReactQuery,
-  withAuth,
+    (story) => createElement(ThemeProvider, { children: story(), theme }),
+    withReactQuery,
 ];
 
 export const loaders = [mswLoader];
