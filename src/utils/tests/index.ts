@@ -1,0 +1,1 @@
+export { WithQueryProvider } from "./withQueryProvider";

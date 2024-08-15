@@ -18,6 +18,7 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
                 e.stopPropagation();
                 deleteMutation.mutate(id);
             }}
+            name="delete-consent"
         >
             {deleteMutation.isIdle ? "x" : "Thinking.."}
         </Button>

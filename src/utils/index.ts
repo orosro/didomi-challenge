@@ -9,3 +9,5 @@ export {
     ResourceNotFoundException,
 } from "./http";
 export { buildUrl } from "./buildUrl";
+
+export { WithQueryProvider } from "./tests";

@@ -2,10 +2,8 @@
 import { expect, afterEach, beforeAll, afterAll } from "vitest";
 import { cleanup } from "@testing-library/react";
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { initWorker } from "./src/mocks/nodeWorker";
+import { nodeWorker as worker } from "./src/mocks/nodeWorker";
 expect.extend(matchers);
-
-const worker = initWorker();
 
 afterEach(() => {
     cleanup();

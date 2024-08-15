@@ -1,7 +1,6 @@
 import { buildUrl, httpService, queryClient, useQuery } from "utils";
 import { useMutation, UseQueryOptions } from "@tanstack/react-query";
 import { ConsentingUserPayload } from "./types/ConsentingUser";
-import { Logger } from "utils/logger";
 
 export type ConsentingUser = {
     id: string;
@@ -48,7 +47,6 @@ export const consentsLoader = async () =>
 // TODO: maybe move this some other place. or make it BE drive?
 export const deleteConsent = (id: string) => {
     return httpService.delete(buildUrl(`consents/${id}`)).then((res) => {
-        Logger.info(`>>>>>   deleteConsent, ${res}`);
         return res;
     });
 };
@@ -74,7 +72,6 @@ export type AddConsentPayload = {
 };
 export const addConsent = (newConsent: AddConsentPayload) => {
     return httpService.post(buildUrl("consents"), newConsent).then((res) => {
-        Logger.info(`>>>>>   add new Consent, ${res}`);
         return res;
     });
 };

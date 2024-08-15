@@ -20,13 +20,8 @@ export default defineConfig({
     test: {
         globals: true,
         environment: "jsdom",
-        setupFiles: "./setupTests.ts",
+        setupFiles: "./setupTests.tsx",
         include: ["./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-        exclude: [
-            "./msw",
-            "./src/main.tsx",
-            "**/browser.ts", // Added these to be excluded from coverage
-            "**/handler.ts",
-        ],
+        exclude: ["./msw", "./src/main.tsx"],
     },
 });

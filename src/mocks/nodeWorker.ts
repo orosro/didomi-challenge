@@ -13,3 +13,5 @@ export const initWorker = () => {
     ];
     return setupServer(...enabledHandlers);
 };
+
+export const nodeWorker = initWorker();
