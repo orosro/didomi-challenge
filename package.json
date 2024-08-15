@@ -10,6 +10,8 @@
         "test": "vitest",
         "test:ci": "vitest run --reporter verbose --reporter=junit --outputFile=./unit-report.xml",
         "preview": "vite preview",
+        "prettier": "prettier . --check",
+        "prettier-fix": "prettier . --write",
         "lint": "CI=true eslint --ignore-pattern '*.d.ts' --ignore-pattern '*.test.*' --ext ts,tsx --max-warnings 0 src",
         "prepare": "husky install",
         "storybook": "storybook dev -p 6006",
