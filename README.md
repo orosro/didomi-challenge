@@ -58,19 +58,65 @@ You can find more templates on the [vite awesome repo](https://github.com/vitejs
 -   Haven't worked too much with React Query & zustand
 -   Need to clean up chakra UI and use Material
 
+## Structure
+
+![Didomi Diagram](./docs/DidomiBasicDiagram.png)
+
+The folder structure is as follows
+
+-   **root** - the container for the entire project
+-   **src** - All the files used in the app, also contains main.tsx, the entry point of the app
+-   **src/app** - Contains the App component and Providers wrapper, placed here for ease of use
+-   **src/mocks** - Contains the MSW files, faked DB, handlers, workers for browser and server
+-   **src/modules** - Each domain entity should have a folder inside modules, will be lazy loaded
+    -   /infrastructure - The "logic" layer - contains various logic, mainly business one, API logic etc
+    -   /presentation - The "view" layer - Contains components, both dummy and smart
+-   **pages** - Router + the minimal components for each page/route
+-   **shared** - Shared elements/components that can be used by the app
+-   **theme** - Should contain logic related to theming, can be moved to shared
+-   **types** - Common types, should also be moved in shared
+-   **utils** - old school utils folder
+
+#### How the app works?
+
+Running `pnpm dev:msw` starts the vite server that serves `main.tsx`.
+Inside we check if the MSW server is enabled through the VITE_ENABLE_MSW env var, if this is true, then we import the browser worker and start it.
+This will basically intercept all the network requests and handle them if there is a handler.
+
+Then we render App.tsx wrapped by the providers, queryProvider, ThemeProvider and finally RouterProvider.
+Router Provider is configured to server Layout as a wrapper, which also has an outlet in which the children routes are rendered.
+
+Each page has it's own folder and is configured using the createBrowserRouter api, providing a loader and the lazy import.
+The loader allows us to trigger the data queries before loading the page.
+
+I decided not to use a client based state manager, and go all in with react query as a network state manager due to the simplicity of the app.
+React query provides everything is needed for the state and app, along with "rehydratation" of the state when interacting with the entities (example: when we delete a consent the table is updated)
+
+I use react-hook-form as it also provides everything needed for creating and managing forms, validation, error management etc.
+
+As per the requirements, I updated the app to use material UI, having to remove Chakra.
+Material UI provides for the basic A11y needs.
+I also had to finalize the integration between msw, vitetest.
+
+#### Remaining work
+
+Unfortunately, I did not have time for the E2E tests but I would go with something like playwright.
+I also wanted to update the translation mechanism to have typings as well
+Another thing nice to have would be a changelog automation based on conventional commits.
+
 ## TODO
 
--   [ ] Create basic diagram for the app
--   [ ] Use Material UI instead chakra-ui
+-   [x] Create basic diagram for the app
+-   [x] Use Material UI instead chakra-ui
     -   [x] Install material
-    -   [ ] Clean up Chakra
+    -   [x] Clean up Chakra
 -   [x] Decide on a way to store data (zustand vs signals)
     -   Need to drop Zustand
 -   [ ] Implement a [changelog](https://changelog.md/)
--   [ ] Write the components
--   [ ] Write basic Unit tests
+-   [x] Write the components
+-   [x] Write basic Unit tests
 -   [ ] Write basic E2E tests
--   [ ] Remove extra tool noise
+-   [x] Remove extra tool noise
 -   [ ] Update translation mechanism
 
 ## Decision
