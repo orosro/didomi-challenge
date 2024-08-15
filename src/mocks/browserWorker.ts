@@ -1,10 +1,10 @@
 import { RequestHandler } from "msw";
-import { setupServer } from "msw/node";
+import { setupWorker } from "msw/browser";
 import {
     deleteConsentHandler,
     getConsentsHandler,
     addConsentHandler,
-} from "../src/utils";
+} from "./handlers";
 
 export const initWorker = () => {
     const enabledHandlers: RequestHandler[] = [
@@ -12,5 +12,5 @@ export const initWorker = () => {
         deleteConsentHandler(),
         addConsentHandler(),
     ];
-    return setupServer(...enabledHandlers);
+    return setupWorker(...enabledHandlers);
 };

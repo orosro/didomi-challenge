@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { getConsentsHandler, deleteConsentHandler } from "utils/handlers";
+import { getConsentsHandler, deleteConsentHandler } from "../../mocks/handlers";
 
 import { Component } from "./index";
 import { collectedConsentsLoader } from "./loader";

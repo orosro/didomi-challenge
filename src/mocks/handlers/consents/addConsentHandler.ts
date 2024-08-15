@@ -1,6 +1,6 @@
 import { RequestHandler, http, HttpResponse, delay } from "msw";
-import { host } from "../../http";
-import { db } from "../../../../msw";
+import { host } from "utils/http";
+import { db } from "../../db";
 import { HttpResponseResolver } from "msw/lib/core/http";
 
 export type AddConsentPayload = {

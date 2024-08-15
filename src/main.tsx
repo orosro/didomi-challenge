@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { App, Providers } from "./app";
 
 if (import.meta.env.MODE === "development" && import.meta.env.VITE_ENABLE_MSW) {
-    import("../msw").then(({ initWorker }) => {
+    import("./mocks").then(({ initWorker }) => {
         const worker = initWorker();
         worker.start().then(initApp);
     });
