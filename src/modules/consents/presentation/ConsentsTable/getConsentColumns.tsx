@@ -17,8 +17,8 @@ export const getConsentColumns = (): GridColDef<ConsentingUser>[] => {
             field: "consents",
             headerName: "Consents given for",
             flex: 2,
-            valueGetter: (value, row) =>
-                `${row.consents.newsletter},${row.consents.ads},${row.consents.statistics}`,
+            // valueGetter: (value, row) =>
+            //     `${row.consents.newsletter},${row.consents.ads},${row.consents.statistics}`,
         },
         {
             field: "actions",

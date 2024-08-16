@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAddConsentMutation } from "../../infrastructure";
 import CircularProgress from "@mui/material/CircularProgress";
+import { paths, useNavigate } from "shared/Router";
 
 export type Inputs = {
     fullName: string;
@@ -20,6 +21,7 @@ export type Inputs = {
 
 // TODO: Would be nice to decouple the rendering of the various states from the form logic
 export const ConsentForm = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState, reset } = useForm<Inputs>();
     const addMutation = useAddConsentMutation();
 
@@ -36,20 +38,21 @@ export const ConsentForm = () => {
     }
 
     if (addMutation.isSuccess) {
-        return (
-            <div>
-                <h3>{t("Good Job! Consent submitted")}</h3>
-                <Button
-                    variant="outlined"
-                    onClick={() => {
-                        reset();
-                        addMutation.reset();
-                    }}
-                >
-                    {t("Add a new one")}
-                </Button>
-            </div>
-        );
+        navigate(paths.collectedConsentsRoutePath);
+        // return (
+        //     <div>
+        //         <h3>{t("Good Job! Consent submitted")}</h3>
+        //         <Button
+        //             variant="outlined"
+        //             onClick={() => {
+        //                 reset();
+        //                 addMutation.reset();
+        //             }}
+        //         >
+        //             {t("Add a new one")}
+        //         </Button>
+        //     </div>
+        // );
     }
 
     return (
@@ -101,7 +104,11 @@ export const ConsentForm = () => {
                     {...register("consents.statistics")}
                 />
             </Stack>
-            <Button variant="outlined" type="submit">
+            <Button
+                variant="outlined"
+                type="submit"
+                disabled={!formState.isValid}
+            >
                 {t("Submit")}
             </Button>
         </form>

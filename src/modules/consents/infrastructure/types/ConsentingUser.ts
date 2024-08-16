@@ -6,8 +6,8 @@ export type ConsentingUserPayload = {
     fullName: string;
     email: string;
     consents: {
-        newsletter: Boolean;
-        ads: Boolean;
-        statistics: Boolean;
+        newsletter: boolean;
+        ads: boolean;
+        statistics: boolean;
     };
 };
