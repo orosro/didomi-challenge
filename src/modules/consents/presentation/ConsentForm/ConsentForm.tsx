@@ -8,6 +8,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useAddConsentMutation } from "../../infrastructure";
 import CircularProgress from "@mui/material/CircularProgress";
 import { paths, useNavigate } from "shared/Router";
+import React, { useCallback } from "react";
+import Typography from "@mui/material/Typography";
+// eslint-disable-next-line no-restricted-imports
+import { Navigate } from "react-router-dom";
 
 export type Inputs = {
     fullName: string;
@@ -17,17 +21,26 @@ export type Inputs = {
         ads: boolean;
         statistics: boolean;
     };
+    selectedConsents: string;
 };
 
 // TODO: Would be nice to decouple the rendering of the various states from the form logic
 export const ConsentForm = () => {
-    const navigate = useNavigate();
-    const { register, handleSubmit, formState, reset } = useForm<Inputs>();
+    const { register, handleSubmit, formState, getValues } = useForm<Inputs>();
     const addMutation = useAddConsentMutation();
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         addMutation.mutate(data);
     };
+
+    const validateConsents = useCallback(() => {
+        const errorMessage = t("At least one consent is required");
+        const currentConsents = getValues().consents;
+        const consentsValues = Object.values(currentConsents);
+
+        const isValid = consentsValues.some((v) => v);
+        return isValid || errorMessage;
+    }, []);
 
     if (addMutation.isLoading) {
         return <CircularProgress />;
@@ -38,21 +51,12 @@ export const ConsentForm = () => {
     }
 
     if (addMutation.isSuccess) {
-        navigate(paths.collectedConsentsRoutePath);
-        // return (
-        //     <div>
-        //         <h3>{t("Good Job! Consent submitted")}</h3>
-        //         <Button
-        //             variant="outlined"
-        //             onClick={() => {
-        //                 reset();
-        //                 addMutation.reset();
-        //             }}
-        //         >
-        //             {t("Add a new one")}
-        //         </Button>
-        //     </div>
-        // );
+        return (
+            <Navigate
+                to={`/${paths.collectedConsentsRoutePath}`}
+                replace={true}
+            />
+        );
     }
 
     return (
@@ -89,7 +93,7 @@ export const ConsentForm = () => {
             </Stack>
             <Stack>
                 <FormControlLabel
-                    control={<Checkbox id="newsletter" defaultChecked />}
+                    control={<Checkbox id="newsletter" />}
                     label={t("Receive newsletter")}
                     {...register("consents.newsletter")}
                 />
@@ -103,12 +107,19 @@ export const ConsentForm = () => {
                     label={t("Contribute to anonymous visit statistics")}
                     {...register("consents.statistics")}
                 />
+                <input
+                    type="hidden"
+                    {...register("selectedConsents", {
+                        validate: validateConsents,
+                    })}
+                />
+                {formState.errors.selectedConsents && (
+                    <Typography color={"red"}>
+                        {formState.errors.selectedConsents?.message}
+                    </Typography>
+                )}
             </Stack>
-            <Button
-                variant="outlined"
-                type="submit"
-                disabled={!formState.isValid}
-            >
+            <Button variant="outlined" type="submit">
                 {t("Submit")}
             </Button>
         </form>
